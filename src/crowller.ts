@@ -62,11 +62,15 @@ class Crowller {
     return fileContent
   }
 
+  writeFile(content: string) {
+    fs.writeFileSync(this.filePath, content)
+  }
+
   async initSpiderProcess() {
     const html = await this.getRawHtml()
     const courseInfo = this.getCourseInfo(html)
     const fileContent = this.generateJsonContent(courseInfo)
-    fs.writeFileSync(this.filePath, JSON.stringify(fileContent))
+    this.writeFile(JSON.stringify(fileContent))
   }
 
   constructor() {
