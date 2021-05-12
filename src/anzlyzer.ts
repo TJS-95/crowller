@@ -17,12 +17,20 @@ interface Content {
 }
 
 export default class DellAnalyzer implements Analyzer {
+  private static instance: DellAnalyzer
+
+  static getInstance() {
+    if (!DellAnalyzer.instance) {
+      DellAnalyzer.instance = new DellAnalyzer()
+    }
+    return DellAnalyzer.instance
+  }
   /**
    * 解析html
    * @param html
    * @returns
    */
-  getCourseInfo(html: string) {
+  private getCourseInfo(html: string) {
     const $ = cherrio.load(html)
     const courseItem = $('.course-item')
     const courseInfos: Course[] = []
@@ -43,7 +51,7 @@ export default class DellAnalyzer implements Analyzer {
    * 存储
    * @param courseInfo
    */
-  generateJsonContent(courseInfo: courseResult, filePath: string) {
+  private generateJsonContent(courseInfo: courseResult, filePath: string) {
     let fileContent: Content = {}
     if (fs.existsSync(filePath)) {
       fileContent = JSON.parse(fs.readFileSync(filePath, 'utf-8'))
@@ -57,4 +65,6 @@ export default class DellAnalyzer implements Analyzer {
     const fileContent = this.generateJsonContent(courseInfo, filePath)
     return JSON.stringify(fileContent)
   }
+
+  private constructor() {}
 }
