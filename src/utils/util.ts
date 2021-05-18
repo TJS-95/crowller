@@ -1,7 +1,7 @@
 interface Result {
-  sucesss: boolean;
-  errMsg?: string;
-  data: any;
+  sucesss: boolean
+  errMsg?: string
+  data: any
 }
 
 export const getResponseData = (data: any, errMsg?: string): Result => {
@@ -9,11 +9,12 @@ export const getResponseData = (data: any, errMsg?: string): Result => {
     return {
       sucesss: false,
       errMsg,
-      data
-    };
+      data,
+    }
+  } else {
+    return {
+      sucesss: true,
+      data,
+    }
   }
-  return {
-    sucesss: true,
-    data
-  };
-};
+}
